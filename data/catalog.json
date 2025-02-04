@@ -1,0 +1,39 @@
+{
+    "categories": [
+        {
+            "id": "cat1",
+            "name": "📱 Smartphones",
+            "description": "Téléphones et accessoires"
+        },
+        {
+            "id": "cat_4548780d",
+            "name": "Test",
+            "description": "Catégorie Test"
+        },
+        {
+            "id": "cat_5b75b002",
+            "name": "test 2",
+            "description": "Catégorie test 2"
+        }
+    ],
+    "products": [
+        {
+            "id": "prod1",
+            "category_id": "cat1",
+            "name": "iPhone 15",
+            "description": "iPhone 15 128Go Noir",
+            "price": 899.99,
+            "stock": 5,
+            "media_id": null
+        },
+        {
+            "id": "prod_5f9f357d",
+            "category_id": "cat",
+            "name": "Test",
+            "description": "Test produit",
+            "price": 12.0,
+            "media_id": "AgACAgQAAxkBAAIBTWehf9NrZoR3154oRmlMbzGEUdJZAAJpxzEbNfYJUZrD7XkWyd59AQADAgADeQADNgQ",
+            "media_type": "photo"
+        }
+    ]
+}
