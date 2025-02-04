@@ -4,11 +4,11 @@ class KeyboardManager:
     def __init__(self, bot):
         self.bot = bot
 
-    def get_main_keyboard(self):
-        """Clavier du menu principal"""
+    def get_start_keyboard(self):
+        """Clavier pour le menu principal"""
         keyboard = [
-            [InlineKeyboardButton("📚 CATALOGUE", callback_data="catalog")],
-            [InlineKeyboardButton("❓ AIDE", callback_data="help")]
+            [InlineKeyboardButton("📦 Catalogue", callback_data="show_catalog")],
+            [InlineKeyboardButton("ℹ️ Aide", callback_data="show_help")]
         ]
         return InlineKeyboardMarkup(keyboard)
 

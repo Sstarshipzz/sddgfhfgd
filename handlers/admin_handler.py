@@ -40,7 +40,34 @@ class AdminHandler:
     async def handle_callback(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Gère les callbacks admin"""
         query = update.callback_query
-        await query.answer()  # Toujours répondre au callback
+        await query.answer()
+
+        if query.data == "skip_media":
+            product_data = context.user_data.get('product_data', {})
+            if product_data and 'price' in product_data:
+                # Créer le produit sans média
+                product_id = f"prod_{str(uuid.uuid4())[:8]}"
+                new_product = {
+                    "id": product_id,
+                    "category_id": product_data['category_id'],
+                    "name": product_data['name'],
+                    "description": product_data['description'],
+                    "price": product_data['price'],
+                    "media_id": None,
+                    "media_type": None
+                }
+            
+                self.bot.catalog['products'].append(new_product)
+                self.bot.save_catalog()
+                context.user_data.clear()
+            
+                await query.message.edit_text(
+                    f"✅ Produit *{product_data['name']}* créé avec succès!",
+                    parse_mode='Markdown',
+                    reply_markup=InlineKeyboardMarkup([[
+                        InlineKeyboardButton("⬅️ Retour au menu", callback_data="admin_menu")
+                    ]])
+                )
 
         print(f"Admin callback reçu: {query.data}")  # Debug log
 
@@ -232,12 +259,13 @@ class AdminHandler:
                 return
             
             elif 'price' not in product_data:
-                # On accepte maintenant n'importe quel texte comme prix
                 product_data['price'] = update.message.text
                 context.user_data['product_data'] = product_data
                 await update.message.reply_text(
-                    "📸 Envoyez une photo ou vidéo du produit\n"
-                    "ou tapez 'skip' pour passer cette étape"
+                    "📸 Envoyez une photo ou vidéo du produit",
+                    reply_markup=InlineKeyboardMarkup([[
+                        InlineKeyboardButton("⏩ Ignorer média", callback_data="skip_media")
+                    ]])
                 )
                 return
 

@@ -36,8 +36,11 @@ class ShopBot:
         self.app.add_handler(CommandHandler("start", self.message_manager.start))
         self.app.add_handler(CommandHandler("admin", self.admin_handler.admin_menu))
     
-        # Handler pour les callbacks (AVANT les autres handlers)
-        self.app.add_handler(CallbackQueryHandler(self.admin_handler.handle_callback))
+        # Handler pour les callbacks admin
+        self.app.add_handler(CallbackQueryHandler(self.admin_handler.handle_callback, pattern="^admin|del_|new_prod"))
+    
+        # Handler pour les callbacks normaux
+        self.app.add_handler(CallbackQueryHandler(self.message_manager.handle_callback))
     
         # Handler pour tous les types de messages texte
         self.app.add_handler(MessageHandler(
